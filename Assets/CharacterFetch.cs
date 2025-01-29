@@ -3,9 +3,14 @@ using UnityEngine.AI;
 
 public class CharacterFetch : MonoBehaviour
 {
-    public Transform ball; // Assigne la balle dans l'inspecteur
+    public Transform ball;        // Assigne la balle dans l'inspecteur
+    public Transform player;      // Assigne le joueur dans l'inspecteur
+    public float grabDistance = 1.5f;  // Distance pour attraper la balle
+    public float dropDistance = 1.5f;  // Distance pour lâcher la balle
+
     private NavMeshAgent agent;
     private Animator animator;
+    private bool hasBall = false; // Indique si la balle est attrapée
 
     void Start()
     {
@@ -15,21 +20,45 @@ public class CharacterFetch : MonoBehaviour
 
     void Update()
     {
-        if (ball != null)
-        {
-            agent.SetDestination(ball.position);
-            animator.SetBool("run", true);
 
-            // Si proche de la balle, arrêter
-            if (Vector3.Distance(transform.position, ball.position) < 1.5f)
+            if (!hasBall)
             {
-                animator.SetBool("run", false);
-                agent.isStopped = true;
+                // Aller vers la balle
+                agent.SetDestination(ball.position);
+                animator.SetBool("run", true);
+
+                // Vérifier si proche de la balle
+                if (Vector3.Distance(transform.position, ball.position) < grabDistance)
+                {
+                    GrabBall();
+                }
             }
             else
             {
-                agent.isStopped = false;
+                // Retourner vers le joueur
+                agent.SetDestination(player.position);
+
+                // Vérifier si proche du joueur pour lâcher la balle
+                if (Vector3.Distance(transform.position, player.position) < dropDistance)
+                {
+                    DropBall();
+                }
             }
-        }
+    }
+
+    void GrabBall()
+    {
+        hasBall = true;
+        ball.SetParent(transform); // Attache la balle au personnage
+        ball.localPosition = new Vector3(0, 1, 1); // Position relative (ajuste selon ton modèle)
+        animator.SetBool("run", true);
+    }
+
+    void DropBall()
+    {
+        hasBall = false;
+        ball.SetParent(null); // Détache la balle
+        ball.position = player.position + new Vector3(0, 1, 1); // Lâche la balle devant le joueur
+        animator.SetBool("run", false);
     }
 }
