@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.ai.navigation": "1.1.5",
     "com.unity.xr.arfoundation": "5.1.5",
     "com.unity.xr.interaction.toolkit": "2.5.4",
     "com.unity.xr.management": "4.5.0",
