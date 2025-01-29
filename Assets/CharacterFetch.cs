@@ -20,8 +20,9 @@ public class CharacterFetch : MonoBehaviour
 
     void Update()
     {
-
-            if (!hasBall)
+        if (!hasBall)
+        {
+            if (Vector3.Distance(ball.position, player.position) > dropDistance)
             {
                 // Aller vers la balle
                 agent.SetDestination(ball.position);
@@ -33,17 +34,18 @@ public class CharacterFetch : MonoBehaviour
                     GrabBall();
                 }
             }
-            else
-            {
-                // Retourner vers le joueur
-                agent.SetDestination(player.position);
+        }
+        else
+        {
+            // Retourner vers le joueur
+            agent.SetDestination(player.position);
 
-                // Vérifier si proche du joueur pour lâcher la balle
-                if (Vector3.Distance(transform.position, player.position) < dropDistance)
-                {
-                    DropBall();
-                }
+            // Vérifier si proche du joueur pour lâcher la balle
+            if (Vector3.Distance(transform.position, player.position) < dropDistance)
+            {
+                DropBall();
             }
+        }
     }
 
     void GrabBall()
