@@ -38,7 +38,7 @@ public class CharacterFetch : MonoBehaviour
         else
         {
             // Retourner vers le joueur
-            agent.SetDestination(player.position);
+            agent.SetDestination(player.position + new Vector3(1, 1, 0));
 
             // Vérifier si proche du joueur pour lâcher la balle
             if (Vector3.Distance(transform.position, player.position) < dropDistance)
@@ -60,7 +60,7 @@ public class CharacterFetch : MonoBehaviour
     {
         hasBall = false;
         ball.SetParent(null); // Détache la balle
-        ball.position = player.position + new Vector3(0, 1, 1); // Lâche la balle devant le joueur
+        ball.position = player.position + new Vector3(1, 1, 0); // Lâche la balle devant le joueur
         animator.SetBool("run", false);
     }
 }
