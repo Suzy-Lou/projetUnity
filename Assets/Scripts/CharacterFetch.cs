@@ -6,7 +6,7 @@ public class CharacterFetch : MonoBehaviour
     public Transform ball;        // Assigne la balle dans l'inspecteur
     public Transform player;      // Assigne le joueur dans l'inspecteur
     public float grabDistance = 1.5f;  // Distance pour attraper la balle
-    public float dropDistance = 1.5f;  // Distance pour lâcher la balle
+    public float dropDistance = 1f;  // Distance pour lâcher la balle
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -48,6 +48,7 @@ public class CharacterFetch : MonoBehaviour
         }
     }
 
+    // Fonction pour récupérer la balle
     void GrabBall()
     {
         hasBall = true;
@@ -56,11 +57,12 @@ public class CharacterFetch : MonoBehaviour
         animator.SetBool("run", true);
     }
 
+    // Fonction lacher la balle
     void DropBall()
     {
         hasBall = false;
         ball.SetParent(null); // Détache la balle
-        ball.position = player.position + new Vector3(1, 1, 0); // Lâche la balle devant le joueur
+        ball.position = player.position + new Vector3(0, 0, 0); // Lâche la balle devant le joueur
         animator.SetBool("run", false);
     }
 }
